@@ -8,14 +8,59 @@
 </head>
 <body>
     <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <button onclick="javascript:dummySignIn()">Dummy Sign In</button>
+    <button onclick="javascript:signOut()">Sign out</button>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script>
         function onSignIn(googleUser){
             var profile = googleUser.getBasicProfile();
-            console.log("ID: " + profile.getId());
-            console.log("Name: " + profile.getName());
-            console.log("Image URL: " + profile.getImageUrl());
-            console.log("Email: " + profile.getEmail());
+
+            var data = {
+                name: profile.getName(),
+                email: profile.getEmail(),
+                image: profile.getImageUrl(),
+                token: googleUser.getAuthResponse().id_token,
+                fromGoogle: true
+            }
+
+            fetch("/api/sessions", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(response => response.json()).then(json => {
+                console.log(json);
+            }).catch(error => {
+                console.log(error);
+            });
+        }
+
+        function signOut(){
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function(){
+                fetch(`/api/sessions`, {
+                    method: "DELETE"
+                }).then(response => response.json()).then(json => {
+                    alert("User Signed Out");
+                }).catch(error => {
+                    console.log(error);
+                });
+            });
+        }
+
+        function dummySignIn(){
+            fetch('/api/sessions', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({})
+            }).then(response => response.json()).then(json => {
+                alert("Dummy signed in");
+            }).catch(error => {
+                console.log(error);
+            });
         }
     </script>
 </body>
