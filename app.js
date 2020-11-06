@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var anothermodule = require('./session/stores/cokkie-session');
+var anothermodule = require('./session/stores/cokkie-session-store');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
