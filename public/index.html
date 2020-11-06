@@ -10,7 +10,7 @@
     <div class="g-signin2" data-onsuccess="onSignIn"></div>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script>
-        function onSignIn(){
+        function onSignIn(googleUser){
             var profile = googleUser.getBasicProfile();
             console.log("ID: " + profile.getId());
             console.log("Name: " + profile.getName());
