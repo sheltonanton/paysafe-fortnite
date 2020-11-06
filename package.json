@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon --watch routes --watch app.js --watch bin/www ./bin/www"
+    "watch": "nodemon --watch routes --watch app.js --watch bin/www ./bin/www",
+    "start": "node bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
