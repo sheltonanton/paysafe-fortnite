@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="584685314295-m141d4bsqmmc15qq9mc7lfbfmrosng8i.apps.googleusercontent.com">
+    <title>Pay Safe</title>
+</head>
+<body>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <button onclick="javascript:dummySignIn()">Dummy Sign In</button>
+    <button onclick="javascript:signOut()">Sign out</button>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+        function onSignIn(googleUser){
+            var profile = googleUser.getBasicProfile();
+
+            var data = {
+                name: profile.getName(),
+                email: profile.getEmail(),
+                image: profile.getImageUrl(),
+                token: googleUser.getAuthResponse().id_token,
+                fromGoogle: true
+            }
+
+            fetch("/api/sessions", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(response => response.json()).then(json => {
+                console.log(json);
+            }).catch(error => {
+                console.log(error);
+            });
+        }
+
+        function signOut(){
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function(){
+                fetch(`/api/sessions`, {
+                    method: "DELETE"
+                }).then(response => response.json()).then(json => {
+                    alert("User Signed Out");
+                }).catch(error => {
+                    console.log(error);
+                });
+            });
+        }
+
+        function dummySignIn(){
+            fetch('/api/sessions', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({})
+            }).then(response => response.json()).then(json => {
+                alert("Dummy signed in");
+            }).catch(error => {
+                console.log(error);
+            });
+        }
+    </script>
+</body>
+</html>
