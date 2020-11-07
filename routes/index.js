@@ -10,4 +10,8 @@ router.get("/failed", function(req, res, next){
   res.json({message: "failed"});
 });
 
+router.get("/", function(req, res, next){
+  res.sendFile('index.html');
+});
+
 module.exports = router;
