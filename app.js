@@ -18,14 +18,10 @@ var app = express();
  * Creating session middleware with express-session
  */
 const sessionOptions = {
-  secret: 'donotseethis#$@',
+  secret: 'don#otse@ethis$',
   cookie: {}
 }
 app.use(session(sessionOptions)); //middleware for sending cookies with the request
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
