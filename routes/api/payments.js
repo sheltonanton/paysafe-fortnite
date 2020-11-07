@@ -12,7 +12,9 @@ router.post('/', function(req, res, next){
     if(data == null){
         res.status(400).json({error: "INVALID_REQUEST", message: "Specify the correct request format"});
     }
-
+    
+    //adding some server side values to payload to process the payment
+    data.customerIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     let email = req.session.email;
     let customerId = getCustomerId(email);
     if(customerId == null || customerId == undefined){

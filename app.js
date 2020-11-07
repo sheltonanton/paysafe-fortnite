@@ -13,7 +13,6 @@ var apiRouter = require('./routes/api');
 
 var app = express();
 
-
 /**
  * Creating session middleware with express-session
  */
@@ -28,6 +27,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('(/*)?', function(req, res, next){
+    let sessionCond = (req.baseUrl == "/api/sessions" || req.baseUrl == "/api/register") && (req.method == "POST" || req.method == "post");
+    let loginCond = req.baseUrl == "/login";
+    let registerCond = req.baseUrl == "/register" && (req.method == "GET" || req.method == "get");
+    if(sessionCond || loginCond || registerCond){
+        next();
+    }else{
+        if(req.session.email != null || req.session.email != undefined){
+          console.log(req.baseUrl + " " + req.method);
+          next();
+        }else{
+          res.redirect(200, '/login');
+        }
+    }
+});
 
 app.use('/api', apiRouter);
 app.get('(/*)?', (req, res) => {
