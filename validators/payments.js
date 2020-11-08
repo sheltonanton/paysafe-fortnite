@@ -12,9 +12,9 @@ const rules = {
 }
 
 function validator(data){
-    var model = {};
-    for(var key in validator){
-        if(validator[key] == 'required' && data[key] == null){
+    let model = {};
+    for(var key in rules){
+        if(rules[key] === 'required' && data[key] == null){
             return null;
         }
         if(data[key] != null)

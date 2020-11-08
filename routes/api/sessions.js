@@ -44,7 +44,6 @@ router.post('/', function(req, res, next) {
 
 /*DELETE SESSION */
 router.delete('/', function(req, res, next){
-    console.log(req.session);
     req.session.destroy(error => {
         if(error){
             res.status(500).json({
@@ -52,9 +51,13 @@ router.delete('/', function(req, res, next){
                 error: "LOGOUT_FAILED"
             });
         }else{
-            res.json({status: "logged out"});
+            console.log(req.cookies);
+            if (req.session && req.session.email && req.cookies && req.cookies['fproiim']) {
+                res.clearCookie('fproiim');
+            }
+            res.status(403).send({error: "NOT AUTHORIZED", message: "User is not authorized"});
         }
-    })
+    });
 });
 
 module.exports = router;
