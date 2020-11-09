@@ -51,7 +51,6 @@ router.delete('/', function(req, res, next){
                 error: "LOGOUT_FAILED"
             });
         }else{
-            console.log(req.cookies);
             if (req.session && req.session.email && req.cookies && req.cookies['fproiim']) {
                 res.clearCookie('fproiim');
             }

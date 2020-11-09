@@ -22,7 +22,6 @@ router.post('/', function(req, res, next){
         data.customerId = customerId;
     }
     let model = validator(data);
-    console.log(data);
     if(model == null){
         res.status(400).json({error: "MISSING PARAMETER", message: `Specify the parameter ${key}`});
         return;
