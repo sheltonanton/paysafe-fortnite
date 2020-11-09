@@ -17,8 +17,7 @@
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
     "node-fetch": "^2.6.1",
-    "pbkdf2-password": "^1.2.1",
-    "whatwg-fetch": "^3.5.0"
+    "pbkdf2-password": "^1.2.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
